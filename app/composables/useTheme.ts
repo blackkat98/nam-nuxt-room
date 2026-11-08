@@ -5,7 +5,7 @@ export const THEME_STORAGE_KEY = 'nuxt-room-theme'
 
 /**
  * Page theme, stored on `<html data-theme>`. The initial value is set before first paint by the inline script in
- * nuxt.config.ts (saved choice, else the system preference); toggling saves the choice for the next visit.
+ * nuxt.config.ts (saved choice, else light); toggling saves the choice for the next visit.
  */
 export function useTheme() {
     const theme = useState<Theme>('theme', () => 'light')

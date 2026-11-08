@@ -16,15 +16,13 @@ export default defineNuxtConfig({
             ],
             script: [
                 {
-                    // Apply the saved (or system) theme before first paint, so dark mode doesn't flash light.
+                    // Apply the saved theme before first paint, so dark mode doesn't flash light. Without a saved
+                    // choice the room starts light (lights on), whatever the device's own setting.
                     // The storage key matches THEME_STORAGE_KEY in app/composables/useTheme.ts.
                     innerHTML: `(function () {
                         var theme
                         try { theme = localStorage.getItem('nuxt-room-theme') } catch (e) {}
-                        if (theme !== 'light' && theme !== 'dark') {
-                            theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-                        }
-                        document.documentElement.dataset.theme = theme
+                        document.documentElement.dataset.theme = theme === 'dark' ? 'dark' : 'light'
                     })()`,
                     tagPosition: 'head',
                 },
