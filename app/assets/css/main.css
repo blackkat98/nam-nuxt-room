@@ -1,0 +1,53 @@
+:root {
+    --bg-solid: #d9ab95;
+    --bg-gradient: radial-gradient(120% 90% at 50% 42%, #ecc9b3 0%, #dcae98 55%, #c99883 100%);
+    --bg-gradient-dark: radial-gradient(120% 90% at 50% 42%, #2c2a44 0%, #1d1b30 55%, #12111f 100%);
+    --hint: #8a5a45;
+
+    color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+    --bg-solid: #1d1b30;
+    --hint: #a9a3d6;
+
+    color-scheme: dark;
+}
+
+html,
+body,
+#__nuxt {
+    height: 100%;
+    margin: 0;
+}
+
+html,
+body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-color: var(--bg-solid);
+}
+
+body {
+    /* own stacking context, so the night layer below paints above the body's background */
+    isolation: isolate;
+    background: var(--bg-gradient);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* The night sky fades in over the day one (gradients themselves can't transition). */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--bg-gradient-dark);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+:root[data-theme='dark'] body::before {
+    opacity: 1;
+}
