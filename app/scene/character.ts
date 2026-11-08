@@ -40,14 +40,14 @@ type Palette = ReturnType<typeof palette>
 
 /**
  * One arm (temple) of the glasses, for the right side (x is mirrored for the left), in the glasses' own space,
- * which sits 0.05 up and 0.56 forward of the head's centre: the hinge, the point above the front of the ear,
- * over the top of the ear, and the tip hooked down behind it. Every point stays just outside the skull.
+ * which sits 0.05 up and 0.56 forward of the head's centre: the hinge, the point above the front of the ear, and
+ * the tip, dipping slightly just past the back of the ear (no visible hook, which read as an extra stroke).
+ * Every point stays just outside the skull.
  */
 const TEMPLE: [number, number, number][] = [
     [0.33, 0.07, 0],
     [0.565, 0.065, -0.48],
-    [0.56, 0.03, -0.68],
-    [0.54, -0.07, -0.72],
+    [0.555, 0.03, -0.7],
 ]
 const TEMPLE_RADIUS = 0.018
 
@@ -63,7 +63,7 @@ function glasses(p: Palette): THREE.Group {
         lens.userData.noShadow = true
         g.add(at(lens, cx, 0, -0.005))
 
-        // the arm: from the hinge along the side of the head, over the top of the ear, then hooked down behind it
+        // the arm: from the hinge along the side of the head, over the top of the ear, ending just behind it
         const arm = TEMPLE.map(([x, y, z]) => V(side * x, y, z))
 
         for (let i = 1; i < arm.length; i++) {
@@ -90,7 +90,8 @@ function buzzCut(p: Palette): THREE.Group {
     g.add(at(shell, 0, 0.02, -0.01))
 
     for (const side of [-1, 1]) {
-        g.add(at(box(0.04, 0.16, 0.1, p.hair, 0.015), side * 0.525, 0, 0.1))
+        // short sideburns, kept clear of the glasses arm above them so the two dark strokes do not merge
+        g.add(at(box(0.04, 0.1, 0.1, p.hair, 0.015), side * 0.525, -0.04, 0.1))
     }
 
     return g
