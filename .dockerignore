@@ -1,0 +1,16 @@
+# keep the build context small: dependencies and build output are made inside the image
+node_modules
+.output
+.nuxt
+.nitro
+.cache
+.data
+dist
+.git
+.vscode
+.idea
+*.log
+.env
+.env.*
+!.env.example
+note.txt

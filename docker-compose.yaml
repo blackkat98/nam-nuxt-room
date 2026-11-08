@@ -1,0 +1,19 @@
+# Nam's Nuxt Room on the Orange Pi, served through the shared Caddy in /home/nam/prj/caddy.
+#
+# It joins the external "proxy" network as "nuxt-room" (the name the shared Caddyfile proxies
+# nam-nuxt-room.blackkat.bond to) and publishes no ports of its own.
+#
+#   docker compose up -d --build
+services:
+    nuxt-room:
+        build: .
+        image: nuxt-room:latest
+        restart: unless-stopped
+        expose:
+            - "3000"
+        networks:
+            - proxy
+
+networks:
+    proxy:
+        external: true
