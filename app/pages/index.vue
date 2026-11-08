@@ -3,7 +3,7 @@ import { MUSIC_URL } from '~/data/music'
 import { BUILT_WITH, CHESS_PROFILE } from '~/data/socials'
 
 useSeoMeta({
-    title: 'Nuxt Room',
+    title: 'Nam\'s Nuxt Room',
     description: 'A cosy isometric room built with Nuxt and Three.js.',
 })
 

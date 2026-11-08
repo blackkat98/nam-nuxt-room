@@ -5,6 +5,11 @@ export default defineNuxtConfig({
     app: {
         head: {
             link: [
+                // my face, cut from my portrait: .ico for older browsers, a sharp PNG for the rest, and a square one
+                // for phone home screens (which round the corners themselves)
+                { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+                { rel: 'icon', type: 'image/png', href: '/icon-192.png', sizes: '192x192' },
+                { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
                 { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
                 { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
                 { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap' },
