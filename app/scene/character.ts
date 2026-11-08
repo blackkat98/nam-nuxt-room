@@ -38,6 +38,19 @@ function palette() {
 
 type Palette = ReturnType<typeof palette>
 
+/**
+ * One arm (temple) of the glasses, for the right side (x is mirrored for the left), in the glasses' own space,
+ * which sits 0.05 up and 0.56 forward of the head's centre: the hinge, the point above the front of the ear,
+ * over the top of the ear, and the tip hooked down behind it. Every point stays just outside the skull.
+ */
+const TEMPLE: [number, number, number][] = [
+    [0.33, 0.07, 0],
+    [0.565, 0.065, -0.48],
+    [0.56, 0.03, -0.68],
+    [0.54, -0.07, -0.72],
+]
+const TEMPLE_RADIUS = 0.018
+
 /** Browline glasses: thick black top rims, thin metal lower rims, clear lenses. */
 function glasses(p: Palette): THREE.Group {
     const g = new THREE.Group()
@@ -49,7 +62,18 @@ function glasses(p: Palette): THREE.Group {
         const lens = new THREE.Mesh(new THREE.CircleGeometry(0.13, 24), p.lens)
         lens.userData.noShadow = true
         g.add(at(lens, cx, 0, -0.005))
-        g.add(rod(V(side * 0.33, 0.07, 0), V(side * 0.52, 0.07, -0.45), 0.018, p.frame, 6))
+
+        // the arm: from the hinge along the side of the head, over the top of the ear, then hooked down behind it
+        const arm = TEMPLE.map(([x, y, z]) => V(side * x, y, z))
+
+        for (let i = 1; i < arm.length; i++) {
+            g.add(rod(arm[i - 1]!, arm[i]!, TEMPLE_RADIUS, p.frame, 6))
+        }
+
+        // round off the bends
+        for (const bend of arm.slice(1, -1)) {
+            g.add(at(sphere(TEMPLE_RADIUS, p.frame, 6, 4), bend.x, bend.y, bend.z))
+        }
     }
 
     g.add(rod(V(-0.07, 0.04, 0), V(0.07, 0.04, 0), 0.02, p.frame, 6))
