@@ -1,7 +1,8 @@
-# Nam's Nuxt Room on the Orange Pi, served through the shared Caddy in /home/nam/prj/caddy.
+# Nam's Nuxt Room on the Orange Pi.
 #
-# It joins the external "proxy" network as "nuxt-room" (the name the shared Caddyfile proxies
-# nam-nuxt-room.blackkat.bond to) and publishes no ports of its own.
+# The Cloudflare tunnel sends nam-nuxt-room.blackkat.bond to http://localhost:3000, so port 3000 is published on
+# the Pi's localhost only (not the LAN). It also joins the external "proxy" network as "nuxt-room", so the shared
+# Caddy in /home/nam/prj/caddy can serve it too.
 #
 #   docker compose up -d --build
 services:
@@ -9,8 +10,9 @@ services:
         build: .
         image: nuxt-room:latest
         restart: unless-stopped
-        expose:
-            - "3000"
+        ports:
+            - "127.0.0.1:3000:3000"
+            - "[::1]:3000:3000"
         networks:
             - proxy
 
